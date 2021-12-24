@@ -5,7 +5,7 @@
  */
 package com.backendems.ems.repository;
 
-import com.backendems.ems.Entity.Disposisi;
+import com.backendems.ems.Entity.Shopping;
 import java.util.Optional;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.CrudRepository;
@@ -14,14 +14,16 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author LENOVO
  */
-public interface DisposisiRespository extends CrudRepository<Disposisi, Integer>{
+public interface ShoppingRespository extends CrudRepository<Shopping, Integer>{
     @Override
-    @Cacheable(value = "getDisposisi")
-    public Iterable<Disposisi> findAll();
+    @Cacheable(value = "getShoppings")
+    public Iterable<Shopping> findAll();
+    
     
     @Override
-    @Cacheable(value= "getDisposisiById", key = "#id")
-    public Optional<Disposisi> findById(Integer id);
+    @Cacheable(value = "getShoppingById", key = "#id")
+    public Optional<Shopping> findById(Integer id);
     
-    public Disposisi findByid(Integer id);
+    public Shopping findByid(Integer id);
 }
+

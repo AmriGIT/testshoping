@@ -45,14 +45,19 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests().antMatchers("/helloadmin").hasRole("ADMIN")
-                .antMatchers("/hellouser").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/authenticate", "/api/register", "/api/postmasuk", "/api/getmasuk","/api/masuk/{code}").permitAll().anyRequest().authenticated()
-                .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).
-                and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                http.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    protected void configure(HttpSecurity httpSecurity) throws Exception{
+    httpSecurity.csrf().disable()
+            .authorizeRequests()
+            .antMatchers("/api/authenticate").permitAll()
+            .antMatchers("/api/register").permitAll()
+            .antMatchers("/api/shopping").permitAll()
+            .antMatchers("/api/shopping/*").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+            .and()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    httpSecurity.addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 }
